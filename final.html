@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+   <meta charset="utf-8">
+   <title>Art GALLARY</title>
+   <link rel="shortcut icon" href="/images/favicon1.ico">
+   
+   <!-- <link rel="stylesheet" href="style1.css" /> -->
+   <!-- <link rel="stylesheet" href="style.css"/> -->
+  <style>
+      h1, h2, h3, nav, footer {
+ font-family: Georgia, Cambria, "Times New Roman", serif;
+}
+body {
+   font-family: Verdana, Arial, sans-serif;
+   font-size: 80%;
+   background-color: rgb(251,249,210);
+}
+
+#searchBox, #settingsBox, #main-table {
+   margin: 0.25em auto;
+   background-color: rgb(128,23,14);
+   padding: 1.5em;
+   border: 5pt solid rgb(251,249,210);
+   width: 80%;
+}
+
+
+#searchBox { margin-top: 3em; }
+#settingsBox{ margin-top: 1em;}
+#main-table { 
+   /* display: absolute; */
+   margin-top: 0.5em; 
+   background-color: rgb(218, 200, 166);
+   border: 2pt solid rgb(128,23,14);
+   }
+
+table {
+   border: collapse; 
+   border-spacing: 0;
+   
+}
+
+table tbody td{
+   border-top: 3pt solid rgb(120, 72, 47);   
+   line-height: 1.5em;
+   vertical-align: middle;
+   padding: 0.5em 0.75em;
+}
+table thead th {
+   text-align: center;
+   padding: 0.25em 0.75em; 
+}
+table thead {
+   background-color: rgb(212, 160, 63) ;
+}
+
+table tbody td:first-child  {
+   text-align: center;
+   padding: 0.5em 0em;   
+}
+
+caption {
+
+      background-color: rgb(128,23,14);
+      color: rgb(253,253, 160);
+      padding: 0.5em 0.5em; 
+      font-weight: bold;
+      font-size: 1.5em;
+}
+
+#only-table{
+   /* margin: auto; */
+   margin: 0.25em;
+   /* width: 100%; */
+   
+}
+
+
+.bigImg{
+	position:absolute;
+	border: solid 10px black;
+	margin:10px;
+	background-color:#FFFFFF;
+	padding:10px;
+}
+
+.artThumb{
+
+   height: 150px;
+   width: 150px;
+}
+
+#myDetails{
+   margin: 10px;
+   margin-top: 10px;
+   padding: 1.5em;
+   font-family: Arial, Helvetica, sans-serif;
+   font-size: 1.03em;
+   background-color: rgb(128,23,14);
+   color: rgb(256,256,256);
+   width: 80%;
+   margin: 0.3em auto;
+}
+
+#header{
+   /* background-color: rgb(128,23,14); */
+   background-image: linear-gradient(to right bottom, maroon, black);
+   height: 3em;
+   width: 90%;
+   margin: auto;
+   padding: 1.5em;
+   /* font-size: 30px; */
+   color: #FFFFFF;
+   font-size: 2.5em;
+   font-family: Arial, Helvetica, sans-serif;
+   text-shadow: 2px 1px rgb(251,249,210);
+}
+
+#logo{
+   height: 100px;
+   border-radius: 1.2em;
+}
+
+#project{
+   float: right;
+}
+
+#edit{
+   height: 20px;
+   width: 20px;
+}
+   .bigImg{
+	position:absolute;
+	border: solid 10px black;
+	margin:10px;
+    height: 500px;
+    width: 500px;
+	background-color:#FFFFFF;
+	padding:10px;
+}
+.artThumb:hover {
+      transform: scale(1.5);
+      border:solid 2px black;
+}
+}
+
+/* #right{
+   float: right;
+}
+#left{
+   float: left;
+} */
+  </style>
+  <script>
+function myFunction() {
+  var input, filter, table, tr, td, i, txtValue;
+  input = document.getElementById("myInput");
+  filter = input.value.toUpperCase();
+  table = document.getElementById("only-table");
+  tr = table.getElementsByTagName("tr");
+  for (i = 0; i < tr.length; i++) {
+    td = tr[i].getElementsByTagName("td")[3];
+    if (td) {
+      txtValue = td.textContent || td.innerText;
+      if (txtValue.toUpperCase().indexOf(filter) > -1) {
+        tr[i].style.display = "";
+      } else {
+        tr[i].style.display = "none";
+      }
+    }       
+  }
+}
+function sortTable() {
+  var table, rows, switching, i, x, y, shouldSwitch;
+  table = document.getElementById("myTable");
+  switching = true;
+  /*Make a loop that will continue until
+  no switching has been done:*/
+  while (switching) {
+    //start by saying: no switching is done:
+    switching = false;
+    rows = table.rows;
+    /*Loop through all table rows (except the
+    first, which contains table headers):*/
+    for (i = 1; i < (rows.length - 1); i++) {
+      //start by saying there should be no switching:
+      shouldSwitch = false;
+      /*Get the two elements you want to compare,
+      one from current row and one from the next:*/
+      x = rows[i].getElementsByTagName("TD")[2];
+      y = rows[i + 1].getElementsByTagName("TD")[2];
+      //check if the two rows should switch place:
+      if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
+        //if so, mark as a switch and break the loop:
+        shouldSwitch = true;
+        break;
+      }
+    }
+    if (shouldSwitch) {
+      /*If a switch has been marked, make the switch
+      and mark that a switch has been done:*/
+      rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+      switching = true;
+    }
+  }
+}
+window.onload = function () {
+    
+    var images = document.querySelectorAll(".artThumb");
+    for (var i = 0; i < images.length; i++) {
+	images[i].onmouseover = function() {
+	    var newNode = document.createElement("img");
+	    var oldsrc=this.src;
+	    var parts=oldsrc.split("/");
+	    newNode.src="images/" + parts[parts.length-1];
+	    newNode.style="border:solid 2px green;";
+	    newNode.className='bigImg';
+	    this.parentNode.appendChild(newNode);
+		console.log(this.src);
+		transform: scale(1.5);
+        
+    //var html='<p class="para" id="para">Hello</p>';
+    //document.querySelector('.bigImg').insertAdjacentHTML('beforeend',html);
+    //document.getElementById('para').innerHTML='This is an image of Amrita Shergil';
+    
+	}
+	images[i].onmouseout = function(){
+	    var images = document.querySelectorAll(".bigImg");
+	    for (var i=0; i < images.length; i++){
+		images[i].parentNode.removeChild(images[i]);
+	    }
+
+}
+    }
+}
+   </script>
+</head>
+<body>
+<form name ="artist" method="get" action="" onsubmit="return validateForm()">
+
+    <div id="header" >
+        <img src="images/topic.png" alt="logo"  id="logo">
+        <p id="project">HTML, CSS , JS<br></p><br>
+    </div>
+
+    <div id="searchBox">
+        Enter Artist Name:
+        <input  id="myInput" onkeyup="myFunction()" type="search" name="search" placeholder="Search Artists" />
+    </div>   
+    <div id="settingsBox">
+        <marquee behavior="scroll" direction="right" id =mmq>Rahul Gupta : rg19961970@gmail.com</marquee>
+        <style>
+            #mmq{
+                color: rgb(253,253, 160);
+
+            }
+        </style>
+    </div>
+    <div id="main-table">
+        <table id="only-table">
+           
+            <caption>Paintings</caption>
+            <thead>
+                <tr class="header>
+                    <th colspan="2"></th>
+                    <th></th>
+                    <th></th>
+                    <th scope="col">Title</th>
+                    <th scope="col">Artist</th>    
+                    <th scope="col">Year</th> 
+                    <th scope="col">Genre</th> 
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                
+                <tr>
+                    <td><input type="checkbox" name="index[]" value="10" /></td>
+                    <td><img src="images/1.jpg" alt="Self Portrait" class="artThumb"/></td>
+                    <td><em>Self Portrait</em></td>
+                    <td>Amrita Shergil </td>           
+                    <td>1931</td>
+                    <td>Portrait</td>  
+                </tr>
+                <tr>
+                    <td><input type="checkbox" name="index[]" value="20"/></td>
+                    <td><img src="images/2.jpg" alt="Bharat Mata" class="artThumb"/></td>
+                    <td><em>Bharat Mata</em></td>
+                    <td>Abindranath Tagore </td>           
+                    <td>1905</td>
+                    <td>Desh Bhakti </td>  
+                </tr>         
+                <tr>
+                    <td><input type="checkbox" name="index[]" value="30"/></td>
+                    <td><img src="images/3.jpg" class="artThumb" alt="Shakuntala" /></td>
+                    <td><em>Shakuntala</em></td>
+                    <td>Raja Ravi Verma        </td>           
+                    <td>1900's</td>
+                    <td>Mahabharat</td>  
+                </tr>   
+                <tr>
+                    <td><input type="checkbox" name="index[]" value="40"/></td>
+                    <td><img src="images/4.jpg" class="artThumb" alt="Bapuji" /></td>
+                    <td><em>Bapuji</em></td>
+                    <td>Nandlal Bose    </td>           
+                    <td>1930</td>
+                    <td>Realism</td>  
+                </tr>  
+                <tr>
+                    <td><input type="checkbox" name="index[]" value="50"/></td>
+                    <td><img src="images/5.jpg" class="artThumb" alt="Mahishasura" /></td>
+                    <td><em>Mahishasura</em></td>
+                    <td>Tyeb Mehta     </td>           
+                    <td>2005</td>
+                    <td>Neo-Classicism</td>  
+                </tr> 
+                <tr>
+                    <td><input type="checkbox" name="index[]" value="50"/></td>
+                    <td><img src="images/6.jpg" class="artThumb" alt="Self-Portrait" /></td>
+                    <td><em>Self-Portrait</em></td>
+                    <td>Rabindranath Tagore     </td>           
+                    <td>1924</td>
+                    <td>Neo-Classicism</td>  
+                </tr>
+                <tr>
+                    <td><input type="checkbox" name="index[]" value="50"/></td>
+                    <td><img src="images/7.jpg" class="artThumb" alt="Three Pujarins" /></td>
+                    <td><em>Three Pujarins</em></td>
+                    <td>Jamini Roy     </td>           
+                    <td>----</td>
+                    <td>Neo-Classicism</td>  
+                </tr>
+                <tr>
+                    <td><input type="checkbox" name="index[]" value="50"/></td>
+                    <td><img src="images/8.jpg" class="artThumb" alt="Horses" /></td>
+                    <td><em>Horses</em></td>
+                    <td>M F Husain     </td>           
+                    <td>2008</td>
+                    <td>Neo-Classicism</td>  
+                </tr>
+                <tr>
+                    <td><input type="checkbox" name="index[]" value="50"/></td>
+                    <td><img src="images/9.jpg" class="artThumb" alt="Krishna(Spring in Kullu)" /></td>
+                    <td><em>Krishna(Spring in Kullu)</em></td>
+                    <td>Nicholas Roerich     </td>           
+                    <td>1979</td>
+                    <td>Neo-Classicism</td>  
+                </tr>
+                <tr>
+                    <td><input type="checkbox" name="index[]" value="50"/></td>
+                    <td><img src="images/10.jpg" class="artThumb" alt="Bindu" /></td>
+                    <td><em>Bindu</em></td>
+                    <td>S H Raza     </td>           
+                    <td>1946</td>
+                    <td>Neo-Classicism</td>  
+                </tr> 
+            </tbody>
+        </table>
+    </div> 
+    </div>
+
+
+    
+</form>
+<script type="text/javascript" src="javaScript.js"></script>
+</body>
+
+</html>
